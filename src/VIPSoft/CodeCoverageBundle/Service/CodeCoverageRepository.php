@@ -77,8 +77,21 @@ class CodeCoverageRepository
         foreach ($coverage as $className => $counts) {
             $counts = json_encode($counts);
 
-            $sql = "INSERT INTO coverage (class, counts) VALUES ('$className', '$counts')";
-            $sqlite->exec($sql);
+
+            #$sql = "INSERT INTO coverage (class, counts) VALUES ('$className', '$counts')";
+            $sql = "INSERT INTO coverage (class, counts) VALUES (:className, :counts)";
+            #$exec = $sqlite->exec($sql);
+            $stmt = $sqlite->prepare($sql);
+            #$sqlite->prepare($sql);
+            $stmt->bindValue(':className', $className);
+            $stmt->bindValue(':counts', $counts);
+
+
+            $exec = $stmt->execute();
+
+            if (!$exec) {
+                //throw new \Exception($sqlite->lastErrorMsg());
+            }
         }
     }
 
@@ -89,6 +102,7 @@ class CodeCoverageRepository
      */
     public function getCoverage()
     {
+        sleep(5);
         $aggregate = new Aggregate();
         $resultSet = array();
         $sqlite    = $this->newSQLiteInstance();
@@ -118,9 +132,12 @@ class CodeCoverageRepository
      */
     public function drop()
     {
+        #var_dump('dropando');
         if (file_exists($this->databaseFile)) {
             unlink($this->databaseFile);
+            #var_dump(error_get_last());
         }
+        #var_dump($this->databaseFile);
     }
 
     /**

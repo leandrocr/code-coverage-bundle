@@ -57,6 +57,9 @@ class RequestListener
             return;
         }
 
+        #var_export($this->driver);
+        #die;
+
         $this->driver->start();
     }
 
@@ -67,6 +70,10 @@ class RequestListener
      */
     public function onKernelTerminate(PostResponseEvent $event)
     {
+
+        #var_export($event);
+        #var_export($this->driver);
+
         if ( ! $this->driver
             || ! $this->repository->isEnabled()
         ) {
