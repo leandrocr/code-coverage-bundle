@@ -132,12 +132,9 @@ class CodeCoverageRepository
      */
     public function drop()
     {
-        #var_dump('dropando');
         if (file_exists($this->databaseFile)) {
             unlink($this->databaseFile);
-            #var_dump(error_get_last());
         }
-        #var_dump($this->databaseFile);
     }
 
     /**

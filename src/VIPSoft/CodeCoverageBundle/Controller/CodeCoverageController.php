@@ -48,7 +48,6 @@ class CodeCoverageController
      */
     public function createAction()
     {
-        #var_dump(' create action');
         if ( ! $this->driver) {
             return new Response('', 503); // Service Unavailable
         }
@@ -67,9 +66,7 @@ class CodeCoverageController
      */
     public function readAction()
     {
-        #sleep(1);
         $coverage = $this->repository->getCoverage();
-        #var_dump(' get action');
 
         return new Response(json_encode($coverage), 200, array('content-type' => 'application/json'));
     }
@@ -81,8 +78,7 @@ class CodeCoverageController
      */
     public function deleteAction()
     {
-        #var_dump(' delete action');
-        $this->repository->drop();
+        #$this->repository->drop();
 
         return new Response();
     }
