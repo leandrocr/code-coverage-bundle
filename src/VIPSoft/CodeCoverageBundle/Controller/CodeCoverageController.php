@@ -78,7 +78,7 @@ class CodeCoverageController
      */
     public function deleteAction()
     {
-        #$this->repository->drop();
+        $this->repository->drop();
 
         return new Response();
     }
